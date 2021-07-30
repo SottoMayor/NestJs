@@ -32,6 +32,20 @@ export class TodosService {
   public getTodoById(id: string): Todo{
     return this.todos.find( todoItem => todoItem.id === id)
   }
+
+  public deleteTodoById(id: string): void{
+    const deletedTodoIndex = this.todos.findIndex(todoItem => todoItem.id === id);
+    this.todos.splice(deletedTodoIndex, 1);
+  }
+
+  public updatedTodoById(id: string, status: string): Todo{
+    const updatedTodoIndex = this.todos.findIndex( todoItem => todoItem.id === id );
+    this.todos[updatedTodoIndex] = {
+      ...this.todos[updatedTodoIndex],
+      status: TodoStatus[status]
+    }
+    return this.todos[updatedTodoIndex];
+  }
   
 
 }
