@@ -3,6 +3,7 @@ import { Todo } from './todos.model';
 import { TodoStatus } from './todos.model';
 import { v4 as uuid } from 'uuid'
 import { CreateTodoDto } from './DTO/create-todos.dto';
+import { GetTodosFilterDto } from './DTO/get-todos-filter.dto';
 
 @Injectable()
 export class TodosService {
@@ -10,6 +11,28 @@ export class TodosService {
 
   public getAllTodos(): Todo[] {
     return this.todos;
+  }
+
+  public getTodosFiltered(getTodosFilter): Todo[] {
+
+    const { status, search } = getTodosFilter;
+
+    let filteredTodos = this.getAllTodos();
+
+    if(status){
+      filteredTodos = filteredTodos.filter( todoItem => todoItem.status === status );
+    }
+
+    if (search){
+      filteredTodos = filteredTodos.filter( todoItem => {
+        if(todoItem.title.includes(search) || todoItem.text.includes(search)){
+          return true;
+        }
+          return false;
+      })
+    }
+
+    return filteredTodos;
   }
 
   public createTodo(CreateTodoDto): Todo{
