@@ -12,11 +12,6 @@ export class TodosService {
     return this.todos;
   }
 
-  // public createTodo(todo: Todo): Todo[]{
-  //   this.todos.push(todo);
-  //   return this.getAllTodos();
-  // }
-
   public createTodo(CreateTodoDto): Todo{
     // Creating the todo in DTO approach
 
@@ -34,5 +29,9 @@ export class TodosService {
     return todo;
   }
 
+  public getTodoById(id: string): Todo{
+    return this.todos.find( todoItem => todoItem.id === id)
+  }
+  
 
 }
