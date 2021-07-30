@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { Todo } from './todos.model';
 import { TodosService } from './todos.service';
 import { CreateTodoDto } from './DTO/create-todos.dto';
@@ -34,7 +34,11 @@ export class TodosController {
 
   @Patch('/:id/:status')
   updatedTodoById(@Param('id') id: string, @Param('status') status: string): Todo{
-    return this,this.todosServices.updatedTodoById(id, status);
+    if(['OPEN', 'IN_PROGRESS', 'DONE'].some( key => key === status )){
+      return this,this.todosServices.updatedTodoById(id, status);
+    }else{
+      throw new BadRequestException('This status is impossible of get to any Todo!')
+    }
   }
 
 }
