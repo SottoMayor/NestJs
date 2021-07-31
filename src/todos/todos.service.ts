@@ -2,10 +2,18 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { TodoStatus } from './todos-status.enum';
 import { CreateTodoDto } from './DTO/create-todos.dto';
 import { GetTodosFilterDto } from './DTO/get-todos-filter.dto';
+import { TodoRepository } from './todos.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Todo } from './todos.entity';
 
 @Injectable()
 export class TodosService {
-  
+  constructor(
+    @InjectRepository(TodoRepository)
+    private TodoRepository: TodoRepository
+    ){}
+
+
 
   // public getAllTodos(): Todo[] {
   //   return this.todos;
@@ -33,30 +41,19 @@ export class TodosService {
   //   return filteredTodos;
   // }
 
-  // public createTodo(CreateTodoDto): Todo{
-  //   // Creating the todo in DTO approach
+  public createTodo(CreateTodo): Promise<Todo>{
+    return this.TodoRepository.createTodo(CreateTodo)
+  }
 
-  //   const { title, text } = CreateTodoDto;
+  public async getTodoById(id: string): Promise<Todo>{
+    const todoFound = await this.TodoRepository.findOne(id);
+    
+    if(!todoFound){
+      throw new NotFoundException(`The todo with ID ${id} was not found!`);
+    }
 
-  //   const todo: Todo = {
-  //     id: uuid(),
-  //     title: title,
-  //     text: text,
-  //     status: TodoStatus.OPEN
-  //   }
-  //   // pushing it
-  //   this.todos.push(todo);
-  //   // returning it
-  //   return todo;
-  // }
-
-  // public getTodoById(id: string): Todo{
-  //   const todoFound = this.todos.find( todoItem => todoItem.id === id);
-  //   if(!todoFound){
-  //     throw new NotFoundException(`The todo with ID ${id} was not found!`)
-  //   }
-  //   return todoFound;
-  // }
+    return todoFound;
+  }
 
   // public deleteTodoById(id: string): void{
   //   const deletedTodoIndex = this.todos.findIndex(todoItem => todoItem.id === id);

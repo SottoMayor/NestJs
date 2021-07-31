@@ -2,6 +2,7 @@ import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post,
 import { TodosService } from './todos.service';
 import { CreateTodoDto } from './DTO/create-todos.dto';
 import { GetTodosFilterDto } from './DTO/get-todos-filter.dto';
+import { Todo } from './todos.entity';
 
 @Controller('todos')
 export class TodosController {
@@ -16,10 +17,16 @@ export class TodosController {
   //   }
   // }
 
-  // @Get('/:id')
-  // getTodoById(@Param('id') id: string): Todo{
-  //   return this.todosServices.getTodoById(id);
-  // } 
+
+  @Get('/:id')
+  getTodoByid(@Param('id') id: string): Promise<Todo>{
+    return this.todosServices.getTodoById(id);
+  }
+
+  @Post()
+  createTodo(@Body() createTodo: CreateTodoDto){
+    return this.todosServices.createTodo(createTodo)
+  }
 
   // @Post()
   // createTodo(@Body() CreateTodoDto: CreateTodoDto ): Todo{
