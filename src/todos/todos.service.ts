@@ -55,6 +55,15 @@ export class TodosService {
     return todoFound;
   }
 
+  public async deleteTodoById(id: string): Promise<void>{
+    const foundTodo = await this.TodoRepository.delete(id);
+
+    if(foundTodo.affected === 0){
+      throw new NotFoundException(`The Todo with ID ${id} was not found!`);
+    }
+
+  }
+
   // public deleteTodoById(id: string): void{
   //   const deletedTodoIndex = this.todos.findIndex(todoItem => todoItem.id === id);
 

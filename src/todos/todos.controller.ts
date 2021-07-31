@@ -28,10 +28,10 @@ export class TodosController {
     return this.todosServices.createTodo(createTodo)
   }
 
-  // @Post()
-  // createTodo(@Body() CreateTodoDto: CreateTodoDto ): Todo{
-  //   return this.todosServices.createTodo(CreateTodoDto);
-  // }
+ @Delete('/:id')
+ deleteTodoById(@Param('id') id: string): Promise<void>{
+   return this.todosServices.deleteTodoById(id);
+ }
 
   // @Delete('/:id')
   // deleteTodoById(@Param('id') id: string): void{
