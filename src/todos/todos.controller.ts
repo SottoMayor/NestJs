@@ -9,14 +9,10 @@ import { TodoStatus } from './todos-status.enum';
 export class TodosController {
   constructor(private todosServices: TodosService) {}
 
-  // @Get()
-  // getTodos( @Query() getTodosFilter: GetTodosFilterDto ): Todo[] {
-  //   if(Object.keys(getTodosFilter).length){
-  //     return this.todosServices.getTodosFiltered(getTodosFilter); 
-  //   }else{
-  //     return this.todosServices.getAllTodos();
-  //   }
-  // }
+  @Get()
+  getTodos(@Query() GetTodosFilterDto: GetTodosFilterDto): Promise<Todo[]>{
+    return this.todosServices.getTodos(GetTodosFilterDto)
+  }
 
 
   @Get('/:id')

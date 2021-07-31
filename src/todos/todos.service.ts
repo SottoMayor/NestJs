@@ -13,33 +13,10 @@ export class TodosService {
     private TodoRepository: TodoRepository
     ){}
 
-
-
-  // public getAllTodos(): Todo[] {
-  //   return this.todos;
-  // }
-
-  // public getTodosFiltered(getTodosFilter): Todo[] {
-
-  //   const { status, search } = getTodosFilter;
-
-  //   let filteredTodos = this.getAllTodos();
-
-  //   if(status){
-  //     filteredTodos = filteredTodos.filter( todoItem => todoItem.status === status );
-  //   }
-
-  //   if (search){
-  //     filteredTodos = filteredTodos.filter( todoItem => {
-  //       if(todoItem.title.includes(search) || todoItem.text.includes(search)){
-  //         return true;
-  //       }
-  //         return false;
-  //     })
-  //   }
-
-  //   return filteredTodos;
-  // }
+  public getTodos(GetTodosFilterDto: GetTodosFilterDto): Promise<Todo[]>{
+    return this.TodoRepository.getTodos(GetTodosFilterDto);
+  }
+  
 
   public createTodo(CreateTodo): Promise<Todo>{
     return this.TodoRepository.createTodo(CreateTodo)
@@ -71,19 +48,5 @@ export class TodosService {
     return foundTodo;
   }
 
-  // public updatedTodoById(id: string, status: string): Todo{
-  //   const updatedTodoIndex = this.todos.findIndex( todoItem => todoItem.id === id );
-
-  //   if(updatedTodoIndex === -1){
-  //     throw new NotFoundException(`The Todo with ID ${id} was not found!`);
-  //   }
-
-  //   this.todos[updatedTodoIndex] = {
-  //     ...this.todos[updatedTodoIndex],
-  //     status: TodoStatus[status]
-  //   }
-  //   return this.todos[updatedTodoIndex];
-  // }
   
-
 }
