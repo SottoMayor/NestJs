@@ -64,15 +64,12 @@ export class TodosService {
 
   }
 
-  // public deleteTodoById(id: string): void{
-  //   const deletedTodoIndex = this.todos.findIndex(todoItem => todoItem.id === id);
-
-  //   if(deletedTodoIndex === -1){
-  //     throw new NotFoundException(`The Todo with ID ${id} was not found!`);
-  //   }
-
-  //   this.todos.splice(deletedTodoIndex, 1);
-  // }
+  public async updatedTodoById(id: string, status: TodoStatus): Promise<Todo>{
+    const foundTodo = await this.getTodoById(id);
+    foundTodo.status = status;
+    await this.TodoRepository.save(foundTodo);
+    return foundTodo;
+  }
 
   // public updatedTodoById(id: string, status: string): Todo{
   //   const updatedTodoIndex = this.todos.findIndex( todoItem => todoItem.id === id );

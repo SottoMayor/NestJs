@@ -3,6 +3,7 @@ import { TodosService } from './todos.service';
 import { CreateTodoDto } from './DTO/create-todos.dto';
 import { GetTodosFilterDto } from './DTO/get-todos-filter.dto';
 import { Todo } from './todos.entity';
+import { TodoStatus } from './todos-status.enum';
 
 @Controller('todos')
 export class TodosController {
@@ -33,10 +34,10 @@ export class TodosController {
    return this.todosServices.deleteTodoById(id);
  }
 
-  // @Delete('/:id')
-  // deleteTodoById(@Param('id') id: string): void{
-  //   return this.todosServices.deleteTodoById(id)
-  // }
+ @Patch('/:id/status')
+ updatedTodoById(@Param('id') id: string, @Body('status') status: TodoStatus): Promise<Todo>{
+  return this.todosServices.updatedTodoById(id, status);
+ }
 
   // @Patch('/:id/:status')
   // updatedTodoById(@Param('id') id: string, @Param('status') status: string): Todo{
