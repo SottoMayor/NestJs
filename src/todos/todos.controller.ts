@@ -1,11 +1,13 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { CreateTodoDto } from './DTO/create-todos.dto';
 import { GetTodosFilterDto } from './DTO/get-todos-filter.dto';
 import { Todo } from './todos.entity';
 import { TodoStatus } from './todos-status.enum';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('todos')
+@UseGuards(AuthGuard())
 export class TodosController {
   constructor(private todosServices: TodosService) {}
 
