@@ -21,8 +21,8 @@ export class TodosController {
 
 
   @Get('/:id')
-  getTodoByid(@Param('id') id: string): Promise<Todo>{
-    return this.todosServices.getTodoById(id);
+  getTodoByid(@Param('id') id: string, @GetUser() user: User): Promise<Todo>{
+    return this.todosServices.getTodoById(id, user);
   }
 
   @Post()
@@ -37,17 +37,8 @@ export class TodosController {
  }
 
  @Patch('/:id/status')
- updatedTodoById(@Param('id') id: string, @Body('status') status: TodoStatus): Promise<Todo>{
-  return this.todosServices.updatedTodoById(id, status);
+ updatedTodoById(@Param('id') id: string, @Body('status') status: TodoStatus, @GetUser() user: User): Promise<Todo>{
+  return this.todosServices.updatedTodoById(id, status, user);
  }
-
-  // @Patch('/:id/:status')
-  // updatedTodoById(@Param('id') id: string, @Param('status') status: string): Todo{
-  //   if(['OPEN', 'IN_PROGRESS', 'DONE'].some( key => key === status )){
-  //     return this,this.todosServices.updatedTodoById(id, status);
-  //   }else{
-  //     throw new BadRequestException('This status is impossible of get to any Todo!')
-  //   }
-  // }
 
 }

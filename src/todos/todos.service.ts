@@ -23,8 +23,8 @@ export class TodosService {
     return this.TodoRepository.createTodo(CreateTodo, user)
   }
 
-  public async getTodoById(id: string): Promise<Todo>{
-    const todoFound = await this.TodoRepository.findOne(id);
+  public async getTodoById(id: string, user: User): Promise<Todo>{
+    const todoFound = await this.TodoRepository.findOne({id: id, user: user});
     
     if(!todoFound){
       throw new NotFoundException(`The todo with ID ${id} was not found!`);
@@ -42,8 +42,8 @@ export class TodosService {
 
   }
 
-  public async updatedTodoById(id: string, status: TodoStatus): Promise<Todo>{
-    const foundTodo = await this.getTodoById(id);
+  public async updatedTodoById(id: string, status: TodoStatus, user: User): Promise<Todo>{
+    const foundTodo = await this.getTodoById(id, user);
     foundTodo.status = status;
     await this.TodoRepository.save(foundTodo);
     return foundTodo;
