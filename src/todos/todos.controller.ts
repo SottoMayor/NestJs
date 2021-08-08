@@ -32,8 +32,8 @@ export class TodosController {
   }
 
  @Delete('/:id')
- deleteTodoById(@Param('id') id: string): Promise<void>{
-   return this.todosServices.deleteTodoById(id);
+ deleteTodoById(@Param('id') id: string, @GetUser() user: User): Promise<void>{
+   return this.todosServices.deleteTodoById(id, user);
  }
 
  @Patch('/:id/status')
