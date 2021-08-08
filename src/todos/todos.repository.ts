@@ -1,6 +1,8 @@
 import { Entity, EntityRepository, Repository } from "typeorm";
 import { Todo } from './todos.entity';
 import { TodoStatus } from "./todos-status.enum";
+import { CreateTodoDto } from "./DTO/create-todos.dto";
+import { User } from "src/auth/user.entity";
 
 @EntityRepository(Todo)
 export class TodoRepository extends Repository<Todo>{
@@ -25,13 +27,14 @@ export class TodoRepository extends Repository<Todo>{
 
   }
 
-    public async createTodo(CreateTodo): Promise<Todo>{
+    public async createTodo(CreateTodo: CreateTodoDto, user: User): Promise<Todo>{
         const { title, text } = CreateTodo;
     
         const newTodo = await this.create({
           title: title,
           text: text, 
-          status:TodoStatus.OPEN,
+          status: TodoStatus.OPEN,
+          user: user
         })
     
         await this.save(newTodo);

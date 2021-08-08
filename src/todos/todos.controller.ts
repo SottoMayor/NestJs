@@ -5,6 +5,8 @@ import { GetTodosFilterDto } from './DTO/get-todos-filter.dto';
 import { Todo } from './todos.entity';
 import { TodoStatus } from './todos-status.enum';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/get-users.decorator';
+import { User } from 'src/auth/user.entity';
 
 @Controller('todos')
 @UseGuards(AuthGuard())
@@ -23,8 +25,9 @@ export class TodosController {
   }
 
   @Post()
-  createTodo(@Body() createTodo: CreateTodoDto){
-    return this.todosServices.createTodo(createTodo)
+  createTodo(@Body() createTodo: CreateTodoDto,
+             @GetUser() user: User){
+    return this.todosServices.createTodo(createTodo, user)
   }
 
  @Delete('/:id')
