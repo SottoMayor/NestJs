@@ -7,17 +7,19 @@ import { User } from "src/auth/user.entity";
 @EntityRepository(Todo)
 export class TodoRepository extends Repository<Todo>{
 
-  public async getTodos(TodosFilterDto): Promise<Todo[]>{
+  public async getTodos(TodosFilterDto, user: User): Promise<Todo[]>{
     const { status, search } = TodosFilterDto;
 
     const query = this.createQueryBuilder('todo');
 
+    query.where({ user: user });
+
     if(status){
-      query.andWhere('todo.status = :status', { status })
+      query.andWhere('todo.status = :status', { status: status })
     }
 
     if(search){
-      query.andWhere('LOWER(todo.title) LIKE LOWER(:search) OR LOWER(todo.text) LIKE LOWER(:search)', 
+      query.andWhere('( LOWER(todo.title) LIKE LOWER(:search) OR LOWER(todo.text) LIKE LOWER(:search) )', 
       { search: `%${search}%` })
     }
     

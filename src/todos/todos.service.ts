@@ -14,8 +14,8 @@ export class TodosService {
     private TodoRepository: TodoRepository
     ){}
 
-  public getTodos(GetTodosFilterDto: GetTodosFilterDto): Promise<Todo[]>{
-    return this.TodoRepository.getTodos(GetTodosFilterDto);
+  public getTodos(GetTodosFilterDto: GetTodosFilterDto, user: User): Promise<Todo[]>{
+    return this.TodoRepository.getTodos(GetTodosFilterDto, user);
   }
   
 
